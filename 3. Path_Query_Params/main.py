@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from typing import Optional
+import uvicorn
 
 app = FastAPI()
 
@@ -37,10 +39,14 @@ class Products(BaseModel):
     pName: str
     pCost: str
     pAvailable: bool
-    # pBrand: Optional[str]
+    pBrand: Optional[str]
 
 
 @app.post("/api/products")
 def Products(requset: Products):
     print(f"PId: {requset.pID} pName: {requset.pName}")
     return {"Product": requset}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=6174)
